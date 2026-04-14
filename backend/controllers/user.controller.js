@@ -1,35 +1,28 @@
 import User from "../models/user.model.js";
-import cookieParser from "cookie-parser";
-import jwt from "jsonwebtoken";
-// import createError from "../utils/createError.js";
 
-// export const deleteUser = async (req, res, next) => {
-//   const user = await User.findById(req.params.id);
+export const deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
 
-//   if (req.userId !== user._id.toString()) {
-//     return res.status(403).send( "You can delete only your account!");
-//   }
-//   await User.findByIdAndDelete(req.params.id);
-//   res.status(200).send("deleted.");
-// };
-// export const getUser = async (req, res, next) => {
-//   const user = await User.findById(req.params.id);
-
-//   res.status(200).send(user);
-// };
-
-export const deleteUser=async(req , res)=>{
-  const user =await User.findById(req.params.id)
-  // const token=req.header("Authorization")?.split(" ")[1];
-  const token = req.cookies.accessToken;
-  if(!token) return res.status(401).send("You are not authenticated")
-  jwt.verify(token,"my-secret-key",async(err,payload)=>{
-    if(payload.id!==user._id.toString()){
-      // console.log(payload.id)
-      return res.status(403).send("You can delete only your account")
+    if (req.userId !== user._id.toString()) {
+      return res.status(403).json("You can delete only your own account!");
     }
-    await User.findByIdAndDelete(req.params.id)
-    res.status(200).send("deleted successfully")
-  })
-}
 
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User deleted.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json("User not found!");
+
+    const { password, ...info } = user._doc;
+    res.status(200).json(info);
+  } catch (err) {
+    next(err);
+  }
+};

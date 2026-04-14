@@ -1,136 +1,113 @@
-// import React from "react";
-// import "./Orders.scss";
-
-// const Orders = () => {
-//     return (
-//         <div className="orders">
-//         <h1>Orders</h1>
-//         </div>
-//     );
-//     }
-
-//     export default Orders
-// 
-// 
-// ;
-
-
-
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import "./Orders.scss";
+import newRequest from "../../utils/newRequest";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
-  const currentUser = {
-    id: 1,
-    username: "Anna",
-    isSeller: true,
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await newRequest.get("/orders");
+        setOrders(res.data);
+      } catch (err) {
+        setError("Failed to load orders.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
+
+  const handleContact = async (order) => {
+    const sellerId = order.sellerId;
+    const buyerId = order.buyerId;
+    const id = sellerId + buyerId;
+
+    try {
+      const res = await newRequest.get(`/conversations/single/${id}`);
+      window.location.href = `/message/${res.data.id}`;
+    } catch (err) {
+      if (err.response?.status === 404) {
+        try {
+          const res = await newRequest.post("/conversations", {
+            to: currentUser.isSeller ? buyerId : sellerId,
+          });
+          window.location.href = `/message/${res.data.id}`;
+        } catch (err2) {
+          console.error("Failed to create conversation:", err2);
+        }
+      }
+    }
   };
+
+  if (loading) return <div className="orders"><div className="container"><p>Loading orders...</p></div></div>;
 
   return (
     <div className="orders">
       <div className="container">
         <div className="title">
-          <h1>Orders</h1>
+          <h1>{currentUser.isSeller ? "Orders I'm Fulfilling" : "Gigs I've Purchased"}</h1>
         </div>
+        {error && <p className="error">{error}</p>}
         <table>
-          <tr>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Price</th>
-            {<th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>}
-            <th>Contact</th>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Stunning concept art</td>
-            <td>59.<sup>99</sup></td>
-            <td>Maria Anders</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Ai generated concept art</td>
-            <td>79.<sup>99</sup></td>
-            <td>Francisco Chang</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>High quality digital character</td>
-            <td>110.<sup>99</sup></td>
-            <td>Roland Mendel</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Illustration hyper realistic painting</td>
-            <td>39.<sup>99</sup></td>
-            <td>Helen Bennett</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Original ai generated digital art</td>
-            <td>119.<sup>99</sup></td>
-            <td>Yoshi Tannamuri</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Text based ai generated art</td>
-            <td>49.<sup>99</sup></td>
-            <td>Giovanni Rovelli</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
+              <th>Status</th>
+              <th>Contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.length === 0 && (
+              <tr>
+                <td colSpan="6" style={{ textAlign: "center", padding: "40px" }}>
+                  No orders found. {currentUser.isSeller ? "Wait for your first client!" : "Go find your first favorite gig!"}
+                </td>
+              </tr>
+            )}
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>
+                  <img
+                    className="image"
+                    src={order.img || "https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"}
+                    alt=""
+                  />
+                </td>
+                <td>{order.title}</td>
+                <td>${order.price}</td>
+                <td>{currentUser.isSeller ? "Buyer #" + order.buyerId.substring(0, 5) : "Seller #" + order.sellerId.substring(0, 5)}</td>
+                <td>
+                  <span className={`status-badge ${order.isCompleted ? "completed" : "pending"}`}>
+                    {order.isCompleted ? "Completed" : "In Progress"}
+                  </span>
+                </td>
+                <td>
+                  <img
+
+                    className="message"
+                    src="./img/message.png"
+                    alt="Contact"
+                    style={{
+  cursor: "pointer",
+  width: "50px",
+  height: "50px",
+  objectFit: "contain"
+}}
+                    onClick={() => handleContact(order)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>

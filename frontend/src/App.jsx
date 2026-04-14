@@ -67,7 +67,7 @@ function App() {
             element:<Message />
           },
           {
-            path: "/samplepay",  // Add the SamplePay route here
+            path: "/samplepay/:gigId",
             element: <Samplepay />,
           },
           {

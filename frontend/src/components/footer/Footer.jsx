@@ -14,8 +14,8 @@ const Footer = () =>{
                 </div>
                 <div className="bottom">
                     <div className="left"></div>
-                    <h2>fiverr</h2>
-                    <span>fiverr internation private limited. 2023</span>
+                    <h2>Freelance</h2>
+                    <span>Freelance. internation private limited. 2023</span>
                     <div className="right">
                         <div className="social">
                             <img src="img/twitter.png" alt="" />

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const GigSchema = new Schema(
+const gigSchema = new Schema(
   {
     userId: {
       type: String,
@@ -25,7 +25,7 @@ const GigSchema = new Schema(
     },
     cat: {
       type: String,
-      required: true,
+      required: false,
     },
     price: {
       type: Number,
@@ -33,31 +33,27 @@ const GigSchema = new Schema(
     },
     cover: {
       type: String,
-      required: true,
+      required: false,
     },
     images: {
       type: [String],
       required: false,
     },
-    userId: {
-      type: String,
-      required: true,
-    },
     shortTitle: {
       type: String,
-      required: true,
+      required: false,
     },
     shortDesc: {
       type: String,
-      required: true,
+      required: false,
     },
     deliveryTime: {
       type: Number,
-      required: true,
+      required: false,
     },
     revisionNumber: {
       type: Number,
-      required: true,
+      required: false,
     },
     features: {
       type: [String],
@@ -73,4 +69,4 @@ const GigSchema = new Schema(
   }
 );
 
-export default mongoose.model("Gig", GigSchema);
+export default mongoose.model("Gig", gigSchema);

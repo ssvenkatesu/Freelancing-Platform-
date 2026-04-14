@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const OrderSchema = new Schema(
+const orderSchema = new Schema(
   {
     gigId: {
       type: String,
@@ -29,7 +29,7 @@ const OrderSchema = new Schema(
     },
     isCompleted: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     payment_intent: {
       type: String,
@@ -41,4 +41,4 @@ const OrderSchema = new Schema(
   }
 );
 
-export default mongoose.model("Order", OrderSchema);
+export default mongoose.model("Order", orderSchema);

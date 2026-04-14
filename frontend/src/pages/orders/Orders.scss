@@ -2,55 +2,89 @@
     display: flex;
     justify-content: center;
     color: #555;
+    min-height: calc(100vh - 200px);
   
     .container {
-      width: 1400px;
+      width: 1300px;
+      max-width: 95%;
       padding: 50px 0px;
   
       .title {
         display: flex;
         justify-content: space-between;
-  
-        button {
-          background-color: #1dbf73;
-          color: white;
-          font-weight: 500;
-          border: none;
-          padding: 10px;
-          cursor: pointer;
+        margin-bottom: 20px;
+
+        h1 {
+          font-size: 24px;
         }
       }
   
       table {
         width: 100%;
+        border-collapse: collapse;
   
         tr {
-          height: 50px;
+          height: 60px;
+          border-bottom: 1px solid #eee;
+
           th {
             text-align: left;
+            padding: 10px;
+            background-color: #f9f9f9;
+            font-size: 14px;
+            color: #222;
           }
+
           td {
-            
-            sup{
-              font-size: 12px;
-            }
-  
+            padding: 10px;
+            font-size: 14px;
+            vertical-align: middle;
+
             .image {
               width: 50px;
-              height: 25px;
+              height: 35px;
               object-fit: cover;
+              border-radius: 4px;
             }
   
             .message {
-              width: 25px;
+              width: 24px;
+              height: 24px;
               cursor: pointer;
+              opacity: 0.7;
+              transition: opacity 0.2s;
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+
+            .status-badge {
+              padding: 4px 10px;
+              border-radius: 20px;
+              font-size: 12px;
+              font-weight: 600;
+
+              &.completed {
+                background-color: #e8f8ef;
+                color: #1dbf73;
+              }
+
+              &.pending {
+                background-color: #fff8e1;
+                color: #ffb800;
+              }
             }
           }
+
           &:nth-child(even) {
-            background-color: #1dbf730f;
+            background-color: #1dbf7305;
+          }
+
+          &:last-child {
+            border-bottom: none;
           }
         }
       }
     }
   }
-  

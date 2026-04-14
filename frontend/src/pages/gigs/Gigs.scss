@@ -106,7 +106,23 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        gap: 20px;
+
+        .loading,
+        .error,
+        .empty {
+          width: 100%;
+          padding: 60px 20px;
+          text-align: center;
+          color: #999;
+          font-size: 16px;
+        }
+
+        .error {
+          color: #e53935;
+          background: #fdecea;
+          border-radius: 8px;
+        }
       }
     }
-  }
-  
+  }

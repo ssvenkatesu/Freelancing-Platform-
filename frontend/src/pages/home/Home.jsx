@@ -42,7 +42,7 @@ const Home = () => {
             </p>
           </div>
           <div className="item">
-            <video src="./img/My python own project.mp4" controls />
+            <video src="https://youtu.be/cQjIere7EqE?si=ojBQ-2rE_VrSKTH2" controls />
           </div>
         </div>
       </div>

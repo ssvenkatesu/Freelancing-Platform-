@@ -285,6 +285,14 @@
           }
         }
   
+        .purchased-btn {
+          background-color: #f4f5f7;
+          color: #999;
+          cursor: not-allowed;
+          border: 1px solid #ddd;
+          pointer-events: none;
+        }
+
         button{
           background-color: #1dbf73;
           padding: 10px;
@@ -296,5 +304,81 @@
         }
       }
     }
-  }
+
+    // Extra states
+    .loading-msg,
+    .error-msg {
+      padding: 40px;
+      text-align: center;
+      font-size: 16px;
+      color: #888;
+    }
   
+    // Review form appended to .reviews
+  .add-review {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    select,
+    textarea {
+      padding: 10px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+
+      &:focus {
+        border-color: #1dbf73;
+      }
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .err {
+      color: #e53935;
+      font-size: 13px;
+    }
+
+    button {
+      align-self: flex-start;
+      background: linear-gradient(135deg, #1dbf73 0%, #19a463 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  // No image placeholder  
+  .no-img {
+    background: #f0f0f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #aaa;
+  }
+}
