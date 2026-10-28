@@ -3,6 +3,7 @@ import upload from "../../utils/upload";
 import "./Add.scss";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
+import RecommendationResults from "../../components/recommendationResults/RecommendationResults";
 
 const Add = () => {
   const navigate = useNavigate();
@@ -24,6 +25,17 @@ const Add = () => {
   });
 
   const [featureInput, setFeatureInput] = useState("");
+  
+  // Extension Fields for AI Recommendation Engine
+  const [requiredSkills, setRequiredSkills] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("any");
+
+  // Recommendation State
+  const [recommendations, setRecommendations] = useState([]);
+  const [recLoading, setRecLoading] = useState(false);
+  const [recError, setRecError] = useState(null);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const handleChange = (e) => {
     setGig((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -41,6 +53,47 @@ const Add = () => {
       ...prev,
       features: prev.features.filter((_, i) => i !== index),
     }));
+  };
+
+  const addSkill = () => {
+    if (skillInput.trim() && !requiredSkills.includes(skillInput.trim())) {
+      setRequiredSkills((prev) => [...prev, skillInput.trim()]);
+      setSkillInput("");
+    }
+  };
+
+  const removeSkill = (index) => {
+    setRequiredSkills((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleFindFreelancers = async () => {
+    if (!gig.title.trim() && !gig.desc.trim()) {
+      setRecError("Please enter a Title or Description before matching freelancers.");
+      setShowRecommendations(true);
+      return;
+    }
+
+    setRecLoading(true);
+    setRecError(null);
+    setShowRecommendations(true);
+
+    try {
+      const res = await newRequest.post("/recommendations/freelancers", {
+        title: gig.title,
+        description: gig.desc,
+        requiredSkills,
+        category: gig.cat,
+        budget: Number(gig.price) || 0,
+        experienceLevel,
+      });
+
+      setRecommendations(res.data.recommendations || []);
+    } catch (err) {
+      console.error("Recommendation Error:", err);
+      setRecError("Failed to fetch freelancer recommendations. Please check backend connection.");
+    } finally {
+      setRecLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -78,7 +131,7 @@ const Add = () => {
   return (
     <div className="add">
       <div className="container">
-        <h1>Add New Gig</h1>
+        <h1>Add New Gig / Project Requirement</h1>
         <form onSubmit={handleSubmit}>
           <div className="sections">
             <div className="info">
@@ -103,6 +156,37 @@ const Add = () => {
                 <option value="ai">AI Services</option>
               </select>
 
+              <label>Required Skills for Project</label>
+              <div className="feature-row">
+                <input
+                  type="text"
+                  placeholder="e.g. React, Node.js, Figma"
+                  value={skillInput}
+                  onChange={(e) => setSkillInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())}
+                />
+                <button type="button" onClick={addSkill}>+ Add Skill</button>
+              </div>
+              <div className="addedFeatures">
+                {requiredSkills.map((s, i) => (
+                  <div className="item" key={i}>
+                    <span>{s}</span>
+                    <button type="button" onClick={() => removeSkill(i)}>✕</button>
+                  </div>
+                ))}
+              </div>
+
+              <label>Experience Requirement</label>
+              <select
+                value={experienceLevel}
+                onChange={(e) => setExperienceLevel(e.target.value)}
+              >
+                <option value="any">Any Experience Level</option>
+                <option value="junior">Junior (1-2 years)</option>
+                <option value="mid">Mid-Level (3-5 years)</option>
+                <option value="senior">Senior (5+ years)</option>
+              </select>
+
               <label>Cover Image</label>
               <input
                 type="file"
@@ -122,16 +206,26 @@ const Add = () => {
               <textarea
                 name="desc"
                 value={gig.desc}
-                placeholder="Brief description to introduce your service to customers"
+                placeholder="Brief description to introduce your project requirement to freelancers"
                 cols="0"
                 rows="16"
                 onChange={handleChange}
                 required
               />
 
-              <button type="submit" disabled={uploading}>
-                {uploading ? "Creating..." : "Create Gig"}
-              </button>
+              <div className="button-group">
+                <button
+                  type="button"
+                  className="find-freelancers-btn"
+                  onClick={handleFindFreelancers}
+                >
+                  🔍 Find Suitable Freelancers
+                </button>
+
+                <button type="submit" className="create-gig-btn" disabled={uploading}>
+                  {uploading ? "Creating..." : "Create Gig"}
+                </button>
+              </div>
               {error && <span className="error">{error}</span>}
             </div>
 
@@ -193,7 +287,7 @@ const Add = () => {
                 ))}
               </div>
 
-              <label>Price ($)</label>
+              <label>Price / Budget ($)</label>
               <input
                 type="number"
                 name="price"
@@ -205,6 +299,16 @@ const Add = () => {
             </div>
           </div>
         </form>
+
+        {/* Live SBERT Recommendation Section */}
+        {showRecommendations && (
+          <RecommendationResults
+            recommendations={recommendations}
+            loading={recLoading}
+            error={recError}
+            onClose={() => setShowRecommendations(false)}
+          />
+        )}
       </div>
     </div>
   );

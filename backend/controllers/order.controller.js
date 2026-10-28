@@ -1,5 +1,6 @@
 import Order from "../models/order.model.js";
 import Gig from "../models/gig.model.js";
+import { recalculateFreelancerMetrics } from "../services/metrics.service.js";
 
 // Helper to generate a fake payment intent ID
 const generateFakePaymentIntent = () => {
@@ -29,6 +30,11 @@ export const createOrder = async (req, res, next) => {
 
     // Increment sales count on the gig
     await Gig.findByIdAndUpdate(req.body.gigId, { $inc: { sales: 1 } });
+
+    // Recalculate freelancer metrics dynamically
+    recalculateFreelancerMetrics(gig.userId).catch((err) =>
+      console.error("Metrics update error:", err)
+    );
 
     res.status(200).json(savedOrder);
   } catch (err) {

@@ -14,6 +14,9 @@ import orderRoute from "./routes/order.route.js";
 import conversationRoute from "./routes/conversation.route.js";
 import messageRoute from "./routes/message.route.js";
 import reviewRoute from "./routes/review.route.js";
+import aiRoute from "./routes/ai.route.js";
+import evaluationRoute from "./routes/evaluation.route.js";
+import recommendationRoute from "./routes/recommendation.route.js";
 
 dotenv.config();
 
@@ -106,6 +109,9 @@ app.use("/api/orders", orderRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/reviews", reviewRoute);
+app.use("/api/ai", aiRoute);
+app.use("/api/evaluations", evaluationRoute);
+app.use("/api/recommendations", recommendationRoute);
 
 // Health check
 app.get("/api/health", (req, res) => {

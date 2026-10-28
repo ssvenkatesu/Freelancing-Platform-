@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./Message.scss";
 import newRequest from "../../utils/newRequest";
 import { io } from "socket.io-client";
+import SmartReply from "../../components/smartReply/SmartReply";
 
 const Message = () => {
   const { id } = useParams();
@@ -185,6 +186,11 @@ const Message = () => {
           )}
           <div ref={messagesEndRef} />
         </div>
+
+        <SmartReply
+          lastMessage={messages.filter((m) => m.userId !== currentUser._id).pop()?.desc}
+          onSelectReply={(text) => setNewMsg(text)}
+        />
 
         <form className="chat-input" onSubmit={handleSubmit}>
           <textarea

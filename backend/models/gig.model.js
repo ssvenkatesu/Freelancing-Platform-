@@ -63,6 +63,14 @@ const gigSchema = new Schema(
       type: Number,
       default: 0,
     },
+    tags: {
+      type: [String],
+      default: [],
+    },
+    aiSummary: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

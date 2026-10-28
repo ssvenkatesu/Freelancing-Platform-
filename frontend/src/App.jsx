@@ -14,6 +14,8 @@ import { createBrowserRouter,RouterProvider,Outlet } from "react-router-dom"
 import Footer from "./components/footer/Footer"
 import "./App.scss"
 import Register from "./pages/register/Register"
+import FreelancerProfile from "./pages/freelancerProfile/FreelancerProfile"
+import FreelancerAIChatbot from "./components/freelancerAIChatbot/FreelancerAIChatbot"
 
 function App() {
 
@@ -24,6 +26,7 @@ function App() {
         <Navbar/>
         <Outlet/>
         <Footer/>
+        <FreelancerAIChatbot />
         </div>
         </>
       )
@@ -77,6 +80,10 @@ function App() {
           {
             path: "/register",  // Add the SamplePay route here
             element: <Register />,
+          },
+          {
+            path: "/profile/:id",
+            element: <FreelancerProfile />,
           }
         ]
       }

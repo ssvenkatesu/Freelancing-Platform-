@@ -1,0 +1,489 @@
+.freelancer-profile {
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+
+  .container {
+    width: 1140px;
+
+    .profile-card {
+      background: #ffffff;
+      border: 1px solid #e4e5e7;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #e4e5e7;
+
+        .avatar {
+          width: 90px;
+          height: 90px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 3px solid #1dbf73;
+        }
+
+        .info {
+          flex: 1;
+
+          h1 {
+            font-size: 26px;
+            color: #222325;
+            margin: 0 0 6px 0;
+          }
+
+          .badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 8px;
+          }
+
+          .meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #62646a;
+          }
+        }
+
+        .contact-btn,
+        .edit-btn {
+          background: #1dbf73;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 6px;
+          font-weight: 600;
+          cursor: pointer;
+          font-size: 14px;
+          transition: background 0.2s ease;
+
+          &:hover {
+            background: #19a463;
+          }
+        }
+
+        .edit-btn {
+          background: #f4f6f8;
+          color: #404145;
+          border: 1px solid #ccc;
+
+          &:hover {
+            background: #e4e5e7;
+          }
+        }
+      }
+
+      .edit-form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        h3 {
+          font-size: 18px;
+          color: #222325;
+          margin-bottom: 10px;
+        }
+
+        label {
+          font-size: 13px;
+          font-weight: 600;
+          color: #404145;
+        }
+
+        input,
+        textarea {
+          padding: 10px 14px;
+          border: 1px solid #c5c7d0;
+          border-radius: 6px;
+          font-size: 14px;
+          font-family: inherit;
+
+          &:focus {
+            outline: none;
+            border-color: #1dbf73;
+          }
+        }
+
+        .save-btn {
+          margin-top: 10px;
+          align-self: flex-start;
+          background: #1dbf73;
+          color: white;
+          border: none;
+          padding: 10px 24px;
+          border-radius: 6px;
+          font-weight: 600;
+          cursor: pointer;
+
+          &:hover {
+            background: #19a463;
+          }
+        }
+      }
+
+      .profile-details {
+        margin-top: 24px;
+
+        .bio-summary {
+          font-size: 16px;
+          font-style: italic;
+          color: #404145;
+          background: #f9fafb;
+          padding: 14px 18px;
+          border-left: 4px solid #1dbf73;
+          border-radius: 4px;
+          margin-bottom: 24px;
+        }
+
+        .section {
+          margin-bottom: 24px;
+
+          h3 {
+            font-size: 17px;
+            color: #222325;
+            margin-bottom: 10px;
+          }
+
+          p {
+            font-size: 15px;
+            color: #62646a;
+            line-height: 1.6;
+          }
+
+          .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .skill-badge {
+              background: #f4f6f8;
+              border: 1px solid #e4e5e7;
+              color: #404145;
+              padding: 6px 14px;
+              border-radius: 20px;
+              font-size: 13px;
+              font-weight: 600;
+            }
+          }
+
+          .resume-link {
+            display: inline-block;
+            color: #1dbf73;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid #1dbf73;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: #1dbf73;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+
+    .performance-dashboard {
+      background: #ffffff;
+      border: 1px solid #e4e5e7;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+      h2 {
+        font-size: 22px;
+        color: #222325;
+        margin-bottom: 24px;
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+
+        .metric-card {
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          &.score {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+          }
+
+          .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+          }
+
+          .card-value {
+            margin: 12px 0 6px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+
+            .big-num {
+              font-size: 28px;
+              font-weight: 800;
+              color: #0f172a;
+
+              &.highlight {
+                color: #16a34a;
+              }
+            }
+
+            .max-scale {
+              font-size: 13px;
+              color: #94a3b8;
+              font-weight: 600;
+            }
+          }
+
+          .card-sub {
+            font-size: 12px;
+            color: #64748b;
+            margin: 0;
+          }
+
+          .status-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            width: fit-content;
+
+            &.passed {
+              background: #dcfce7;
+              color: #15803d;
+            }
+
+            &.pending {
+              background: #fef3c7;
+              color: #b45309;
+            }
+          }
+
+          .formula-toggle {
+            background: transparent;
+            border: none;
+            color: #16a34a;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0;
+            text-align: left;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .formula-drawer {
+        background: #f1f5f9;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 24px;
+
+        h3 {
+          font-size: 14px;
+          color: #334155;
+          margin-bottom: 8px;
+        }
+
+        .formula-text {
+          font-family: monospace;
+          background: #ffffff;
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          color: #16a34a;
+          margin-bottom: 12px;
+        }
+
+        .weights-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 8px;
+
+          .w-item {
+            font-size: 12px;
+            color: #475569;
+            display: flex;
+            justify-content: space-between;
+
+            strong {
+              color: #0f172a;
+            }
+          }
+        }
+      }
+
+      .reviews-section {
+        margin-top: 30px;
+
+        h3 {
+          font-size: 18px;
+          color: #222325;
+          margin-bottom: 16px;
+        }
+
+        .rating-distribution {
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 14px;
+          max-width: 400px;
+          margin-bottom: 24px;
+
+          .dist-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            margin-bottom: 6px;
+
+            .star-label {
+              width: 30px;
+              color: #64748b;
+              font-weight: 600;
+            }
+
+            .bar-bg {
+              flex: 1;
+              height: 8px;
+              background: #e2e8f0;
+              border-radius: 4px;
+              overflow: hidden;
+
+              .bar-fill {
+                height: 100%;
+                background: #f59e0b;
+                border-radius: 4px;
+              }
+            }
+
+            .count-label {
+              width: 20px;
+              text-align: right;
+              color: #64748b;
+            }
+          }
+        }
+
+        .no-reviews {
+          color: #94a3b8;
+          font-style: italic;
+        }
+
+        .reviews-list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+
+          .review-card {
+            background: #ffffff;
+            border: 1px solid #e4e5e7;
+            border-radius: 8px;
+            padding: 16px;
+
+            .rev-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+
+              .rev-user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .rev-avatar {
+                  width: 36px;
+                  height: 36px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                }
+
+                .rev-name {
+                  display: block;
+                  font-size: 14px;
+                  font-weight: 700;
+                  color: #222325;
+                }
+
+                .rev-country {
+                  display: block;
+                  font-size: 11px;
+                  color: #74767e;
+                }
+              }
+
+              .rev-stars {
+                color: #f59e0b;
+                font-size: 14px;
+              }
+            }
+
+            .rev-text {
+              font-size: 14px;
+              color: #404145;
+              line-height: 1.5;
+              margin-bottom: 8px;
+            }
+
+            .rev-date {
+              font-size: 11px;
+              color: #94a3b8;
+            }
+          }
+        }
+      }
+    }
+
+    .gigs-section {
+      h2 {
+        font-size: 22px;
+        color: #222325;
+        margin-bottom: 20px;
+      }
+
+      .no-gigs {
+        color: #74767e;
+        font-style: italic;
+      }
+
+      .gigs-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+      }
+    }
+  }
+}

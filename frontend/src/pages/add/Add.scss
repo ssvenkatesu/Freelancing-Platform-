@@ -82,12 +82,12 @@
             }
 
             button {
-              padding: 11px 18px;
+              padding: 10px 16px;
               background: #1dbf73;
               color: white;
               border: none;
               border-radius: 8px;
-              font-size: 18px;
+              font-size: 13px;
               cursor: pointer;
               font-weight: bold;
 
@@ -128,28 +128,49 @@
             }
           }
 
-          button[type="submit"] {
-            padding: 14px 28px;
-            background: linear-gradient(135deg, #1dbf73 0%, #19a463 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 10px;
+          .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
 
-            &:hover {
-              opacity: 0.92;
-              transform: translateY(-1px);
-              box-shadow: 0 4px 12px rgba(29, 191, 115, 0.35);
+            .find-freelancers-btn {
+              flex: 1;
+              padding: 14px 20px;
+              background: #f8fafc;
+              border: 2px solid #1dbf73;
+              color: #1dbf73;
+              border-radius: 10px;
+              font-size: 15px;
+              font-weight: 700;
+              cursor: pointer;
+              transition: all 0.2s ease;
+
+              &:hover {
+                background: #f0fdf4;
+              }
             }
 
-            &:disabled {
-              opacity: 0.5;
-              cursor: not-allowed;
-              transform: none;
+            .create-gig-btn {
+              flex: 1;
+              padding: 14px 20px;
+              background: linear-gradient(135deg, #1dbf73 0%, #19a463 100%);
+              color: white;
+              border: none;
+              border-radius: 10px;
+              font-size: 15px;
+              font-weight: 700;
+              cursor: pointer;
+              transition: all 0.2s ease;
+
+              &:hover:not(:disabled) {
+                opacity: 0.92;
+                box-shadow: 0 4px 12px rgba(29, 191, 115, 0.35);
+              }
+
+              &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+              }
             }
           }
         }

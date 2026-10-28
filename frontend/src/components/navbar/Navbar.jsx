@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
+import AiAssistantModal from "../aiAssistant/AiAssistantModal";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
+  const [aiModalOpen, setAiModalOpen] = useState(false);
 
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -39,6 +41,25 @@ const Navbar = () => {
           <span className="dot">.</span>
         </div>
         <div className="links">
+          <button
+            className="ai-suite-btn"
+            onClick={() => setAiModalOpen(true)}
+            style={{
+              background: "linear-gradient(135deg, #1dbf73 0%, #109648 100%)",
+              color: "#fff",
+              border: "none",
+              padding: "7px 14px",
+              borderRadius: "20px",
+              fontWeight: "600",
+              cursor: "pointer",
+              fontSize: "13px",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            }}
+          >
+            ✨ AI Suite
+          </button>
           <span>Freelance Business</span>
           <span>Explore</span>
           <span>English</span>
@@ -65,6 +86,7 @@ const Navbar = () => {
               <span>{currentUser.username}</span>
               {open && (
                 <div className="options">
+                  <Link to={`/profile/${currentUser._id}`}>My Profile</Link>
                   {currentUser.isSeller && (
                     <>
                       <Link to="/mygigs">My Gigs</Link>
@@ -80,6 +102,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
+      <AiAssistantModal isOpen={aiModalOpen} onClose={() => setAiModalOpen(false)} />
       {active && (
         <>
           <hr />
